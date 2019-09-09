@@ -1,28 +1,33 @@
 #!/bin/sh
 
+# Github repository owner
 OWNER="klakegg"
 
+# Git user information
+git config --global user.email "erlend@klakegg.net"
+git config --global user.name "Updater"
+
+# Detect versions
 CURRENT=$(cat Dockerfile | grep VERSION | head -1 | cut -d = -f 2)
 VERSIONS=$(curl -s "https://github.com/gjtorikian/html-proofer/tags.atom" | grep '<link rel' | sed -e "s:\"/>::" -e "s|/tag/v|/|" | cut -d '/' -f 8 | tac)
 
-FOUND="0"
 
+FOUND="0"
 for v in $VERSIONS; do
   if [ $FOUND = "0" ]; then
     if [ $v = $CURRENT ]; then
       FOUND="1"
     fi
   else
+    # Update docker
     sed -i "s:$CURRENT:$v:" Dockerfile
 
-    git config --global user.email "erlend@klakegg.net"
-    git config --global user.name "Updater"
-
-    git status
+    # Create commit and tag
     git add .
     git commit -m "Version $v"
     git tag $v HEAD
 
+    # Push commit and tag
     header=$(echo -n "${OWNER}:${GITHUB_TOKEN}" | base64)
     git -c http.extraheader="AUTHORIZATION: basic $header" push origin HEAD:master
     git -c http.extraheader="AUTHORIZATION: basic $header" push origin $v
