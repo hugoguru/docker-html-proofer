@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Make sure only tagged commits triggers logic in hooks files.
+if [ "$SOURCE_BRANCH" = "master" ]; then
+    exit
+fi
+
+# Listing some useful commands
+echos "CI: $CI"
+echos "DOCKER_REPO: $DOCKER_REPO"
+echos "SOURCE_BRANCH: $SOURCE_BRANCH"
+echo
+
+# Add `latest` tag
+docker tag $DOCKER_REPO:$SOURCE_BRANCH $DOCKER_REPO:latest
+
+# Push `latest` tag
+if [ "$CI" != "true" ]; then
+  docker push $DOCKER_REPO:latest
+fi

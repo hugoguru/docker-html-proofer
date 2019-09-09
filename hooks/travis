@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# This is the file triggered by Travis.
+
+# Setting variables for build
+export DOCKER_REPO="klakegg/html-proofer"
+export CI="true"
+
+# Build initial image as done by Docker Hub
+docker build -t $DOCKER_REPO .
+echo
+
+# Trigger code for Docker Hub
+source hooks/post_push
+
+# List images
+docker images $DOCKER_REPO
+echo
