@@ -1,9 +1,18 @@
 #!/bin/bash
 
+# This is the file triggered by Docker Hub after building the initial image.
+
+DPWD=$(pwd)
+PART="sys"
+
 # Make sure only tagged commits triggers logic in hooks files.
 if [ "$SOURCE_BRANCH" = "master" ]; then
     exit
 fi
+
+function echos {
+  echo "[$PART] $@"
+}
 
 # Listing some useful commands
 echos "CI: $CI"
