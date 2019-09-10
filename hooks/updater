@@ -11,7 +11,7 @@ git config --global user.name "Updater"
 CURRENT=$(cat Dockerfile | grep VERSION | head -1 | cut -d = -f 2)
 VERSIONS=$(curl -s "https://github.com/gjtorikian/html-proofer/tags.atom" | grep '<link rel' | sed -e "s:\"/>::" -e "s|/tag/v|/|" | cut -d '/' -f 8 | tac)
 
-
+# Detect potential new version
 FOUND="0"
 for v in $VERSIONS; do
   if [ $FOUND = "0" ]; then
@@ -19,8 +19,17 @@ for v in $VERSIONS; do
       FOUND="1"
     fi
   else
-    # Update docker
+    # Variables
+    lv=$(echo ".$v." | sed -E -e "s|\.([0-9])\.|.0\1.|g" -e "s|^\.||" -e "s|.$||")
+
+    # Update Dockefile
     sed -i "s:$CURRENT:$v:" Dockerfile
+
+    # Update documentation
+    echo $v > version/$lv
+    cat template/README.md \
+      | sed "s:\[VERSION\]:$v:" \
+      > README.md
 
     # Create commit and tag
     git add .
