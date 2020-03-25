@@ -1,4 +1,4 @@
-FROM ruby:2.6.4-alpine3.10
+FROM ruby:2.7.0-alpine3.11
 
 ARG VERSION=3.15.1
 
