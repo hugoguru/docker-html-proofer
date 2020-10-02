@@ -33,6 +33,24 @@ docker run --rm -it \
 ```
 
 
+### .gitlab-ci.yml
+
+```yaml
+html proofer:
+  stage: test
+  image:
+    name: klakegg/html-proofer
+    entrypoint: [""]
+  script:
+    - |
+      htmlproofer \
+        --empty-alt-ignore \
+        --url-ignore "/www.facebook.com/" \
+        --url-swap "https?\:\/\/(www\.example\.com):" \
+        dist
+  retry: 1
+```
+
 ## Configuration
 
 Volumes:
