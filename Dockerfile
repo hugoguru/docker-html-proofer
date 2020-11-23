@@ -1,6 +1,6 @@
 FROM ruby:2.7.1-alpine3.11
 
-ARG VERSION=3.17.1
+ARG VERSION=3.17.2
 
 RUN apk add --no-cache libcurl xz-libs \
  && apk add --no-cache --virtual tmp build-base libxml2-dev libxslt-dev \
