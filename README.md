@@ -4,7 +4,7 @@
 
 Docker image for [HTMLProofer](https://github.com/gjtorikian/html-proofer).
 
-Latest version: `3.18.5`
+Latest version: `3.18.6`
 
 
 ## Using image
@@ -17,7 +17,7 @@ This image does not try to do any fancy except being up-to-date.
 ```shell
 docker run --rm -it \
   -v $(pwd):/src \
-  klakegg/html-proofer:3.18.5 \
+  klakegg/html-proofer:3.18.6 \
   --allow-hash-href --check-html --empty-alt-ignore
 ```
 
@@ -26,7 +26,7 @@ docker run --rm -it \
 
 ```yaml
   validate:
-    image: klakegg/html-proofer:3.18.5
+    image: klakegg/html-proofer:3.18.6
     command: --allow-hash-href --check-html --empty-alt-ignore
     volumes:
       - .:/src
