@@ -1,0 +1,38 @@
+name: Detect release
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Fetch tag
+        uses: actions/github-script@v4
+        id: tag
+        with:
+          script: |
+            github.repos.listTags({owner: 'gjtorikian', repo: 'html-proofer'}).then(res => {
+              core.setOutput('version', res.data.filter(tag => tag.name.startsWith('v'))[0].name.substring(1))
+            })
+
+      - name: Write version
+        run: echo -n "${{ steps.tag.outputs.version }}" > .env/HTMLPROOFER_VERSION
+
+      - name: Commit and push potential changes
+        uses: actions-js/push@master
+        with:
+          message: HTMLProofer version ${{ steps.source.outputs.version }}
+          github_token: ${{ secrets.BOT_TOKEN }}
+          branch: main
+          author_name: ${{ secrets.BOT_USERNAME }}
+          author_email: ${{ secrets.BOT_EMAIL }}

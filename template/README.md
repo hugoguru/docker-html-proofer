@@ -1,10 +1,8 @@
 # HTMLProofer
 
-[![Build Status](https://travis-ci.org/klakegg/docker-html-proofer.svg?branch=master)](https://travis-ci.org/klakegg/docker-html-proofer)
-
 Docker image for [HTMLProofer](https://github.com/gjtorikian/html-proofer).
 
-Latest version: `[VERSION]`
+Latest version: `${HTMLPROOFER_VERSION}`
 
 
 ## Using image
@@ -17,7 +15,7 @@ This image does not try to do any fancy except being up-to-date.
 ```shell
 docker run --rm -it \
   -v $(pwd):/src \
-  klakegg/html-proofer:[VERSION] \
+  klakegg/html-proofer:${HTMLPROOFER_VERSION} \
   --allow-hash-href --check-html --empty-alt-ignore
 ```
 
@@ -26,7 +24,7 @@ docker run --rm -it \
 
 ```yaml
   validate:
-    image: klakegg/html-proofer:[VERSION]
+    image: klakegg/html-proofer:${HTMLPROOFER_VERSION}
     command: --allow-hash-href --check-html --empty-alt-ignore
     volumes:
       - .:/src

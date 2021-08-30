@@ -1,13 +1,12 @@
-FROM ruby:2.7.3-alpine3.13
+FROM ruby:2.7.4-alpine3.14
 
-ARG VERSION=3.19.2
+ARG VERSION
 
-RUN apk add --no-cache libcurl xz-libs g++ \
+RUN apk add --no-cache libcurl xz-libs \
  && apk add --no-cache --virtual tmp build-base libxml2-dev libxslt-dev \
  && gem install html-proofer --version "= $VERSION" --no-document \
  && apk del tmp
 
-VOLUME /src
 WORKDIR /src
 
 ENTRYPOINT ["htmlproofer"]
