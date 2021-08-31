@@ -15,7 +15,7 @@ This image does not try to do any fancy except being up-to-date.
 ```shell
 docker run --rm -it \
   -v $(pwd):/src \
-  klakegg/html-proofer:3.19.2 \
+  quay.io/hugoguru/html-proofer:3.19.2 \
   --allow-hash-href --check-html --empty-alt-ignore
 ```
 
@@ -24,7 +24,7 @@ docker run --rm -it \
 
 ```yaml
   validate:
-    image: klakegg/html-proofer:3.19.2
+    image: quay.io/hugoguru/html-proofer:3.19.2
     command: --allow-hash-href --check-html --empty-alt-ignore
     volumes:
       - .:/src
