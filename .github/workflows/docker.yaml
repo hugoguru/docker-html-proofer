@@ -7,6 +7,7 @@ on:
   release:
     types:
       - released
+  workflow_dispatch:
 
 jobs:
   build:
@@ -14,7 +15,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -42,3 +46,17 @@ jobs:
       - name: Push images
         if: "startsWith(github.ref, 'refs/tags/')"
         run: make push-release
+
+      - name: Push images
+        if: "startsWith(github.ref, 'refs/tags/')"
+        run: cat template/README.md | envsubst > README.md
+
+      - name: Commit and push potential changes
+        uses: actions-js/push@master
+        if: "startsWith(github.ref, 'refs/tags/')"
+        with:
+          message: HTMLProofer version ${{ steps.source.outputs.version }}
+          github_token: ${{ secrets.BOT_TOKEN }}
+          branch: main
+          author_name: ${{ secrets.BOT_USERNAME }}
+          author_email: ${{ secrets.BOT_EMAIL }}
