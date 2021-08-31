@@ -58,7 +58,7 @@ jobs:
         uses: actions-js/push@master
         if: "startsWith(github.ref, 'refs/tags/')"
         with:
-          message: HTMLProofer version ${{ steps.source.outputs.version }}
+          message: HTMLProofer version ${{ env.HTMLPROOFER_VERSION }}
           github_token: ${{ secrets.BOT_TOKEN }}
           branch: main
           author_name: ${{ secrets.BOT_USERNAME }}
