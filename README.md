@@ -30,6 +30,22 @@ docker run --rm -it \
       - .:/src
 ```
 
+### GitLab CI
+
+```yaml
+html proofer:
+  stage: test
+  image:
+    name: klakegg/html-proofer:3.19.2
+    entrypoint: [""]
+  script:
+    - |
+      htmlproofer \
+        --empty-alt-ignore \
+        --allow-hash-href \
+        --url-swap "https?\:\/\/(www\.example\.com):" \
+        dist
+```
 
 ## Configuration
 
