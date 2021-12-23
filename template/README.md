@@ -31,8 +31,20 @@ docker run --rm -it \
 ```
 
 
-## Configuration
+### GitLab CI
 
-Volumes:
+```yaml
+html proofer:
+  stage: test
+  image:
+    name: quay.io/hugoguru/html-proofer:${HTMLPROOFER_VERSION}
+    entrypoint: [""]
+  script:
+    - |
+      htmlproofer \
+        --empty-alt-ignore \
+        --allow-hash-href \
+        --url-swap "https?\:\/\/(www\.example\.com):" \
+        dist
+```
 
-* `/src` - Site folder and workdir

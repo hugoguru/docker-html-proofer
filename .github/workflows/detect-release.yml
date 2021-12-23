@@ -17,11 +17,11 @@ jobs:
           fetch-depth: 0
 
       - name: Fetch tag
-        uses: actions/github-script@v4
+        uses: actions/github-script@v5
         id: tag
         with:
           script: |
-            github.repos.listTags({owner: 'gjtorikian', repo: 'html-proofer'}).then(res => {
+            github.rest.repos.listTags({owner: 'gjtorikian', repo: 'html-proofer'}).then(res => {
               core.setOutput('version', res.data.filter(tag => tag.name.startsWith('v'))[0].name.substring(1))
             })
 
