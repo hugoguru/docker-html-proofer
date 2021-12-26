@@ -1,4 +1,4 @@
-FROM ruby:2.7.4-alpine3.14
+FROM ruby:2.7.5-alpine3.15 AS main
 
 ARG VERSION
 
@@ -9,4 +9,10 @@ RUN apk add --no-cache libcurl xz-libs \
 
 WORKDIR /src
 
-ENTRYPOINT ["htmlproofer"]
+ENTRYPOINT [ "htmlproofer" ]
+
+
+FROM main AS ci
+
+ENTRYPOINT [ "" ]
+CMD [ "htmlproofer" ]

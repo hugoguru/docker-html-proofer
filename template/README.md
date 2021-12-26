@@ -23,11 +23,11 @@ docker run --rm -it \
 ### docker-compose
 
 ```yaml
-  validate:
-    image: quay.io/hugoguru/html-proofer:${HTMLPROOFER_VERSION}
-    command: --allow-hash-href --check-html --empty-alt-ignore
-    volumes:
-      - .:/src
+validate:
+  image: quay.io/hugoguru/html-proofer:${HTMLPROOFER_VERSION}
+  command: --allow-hash-href --check-html --empty-alt-ignore
+  volumes:
+    - .:/src
 ```
 
 
@@ -36,9 +36,7 @@ docker run --rm -it \
 ```yaml
 html proofer:
   stage: test
-  image:
-    name: quay.io/hugoguru/html-proofer:${HTMLPROOFER_VERSION}
-    entrypoint: [""]
+  image: quay.io/hugoguru/html-proofer:${HTMLPROOFER_VERSION}-ci
   script:
     - |
       htmlproofer \
@@ -48,3 +46,7 @@ html proofer:
         dist
 ```
 
+
+## Configuration
+
+* Work directory: `/src`

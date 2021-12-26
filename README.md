@@ -48,3 +48,7 @@ html proofer:
         dist
 ```
 
+
+## Configuration
+
+* Work directory: `/src`
