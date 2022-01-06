@@ -2,7 +2,7 @@
 
 Docker image for [HTMLProofer](https://github.com/gjtorikian/html-proofer).
 
-Latest version: `3.19.3`
+Latest version: `4.0.0.rc1`
 
 
 ## Using image
@@ -15,7 +15,7 @@ This image does not try to do any fancy except being up-to-date.
 ```shell
 docker run --rm -it \
   -v $(pwd):/src \
-  quay.io/hugoguru/html-proofer:3.19.3 \
+  quay.io/hugoguru/html-proofer:4.0.0.rc1 \
   --allow-hash-href --check-html --empty-alt-ignore
 ```
 
@@ -23,11 +23,11 @@ docker run --rm -it \
 ### docker-compose
 
 ```yaml
-  validate:
-    image: quay.io/hugoguru/html-proofer:3.19.3
-    command: --allow-hash-href --check-html --empty-alt-ignore
-    volumes:
-      - .:/src
+validate:
+  image: quay.io/hugoguru/html-proofer:4.0.0.rc1
+  command: --allow-hash-href --check-html --empty-alt-ignore
+  volumes:
+    - .:/src
 ```
 
 
@@ -36,9 +36,7 @@ docker run --rm -it \
 ```yaml
 html proofer:
   stage: test
-  image:
-    name: quay.io/hugoguru/html-proofer:3.19.3
-    entrypoint: [""]
+  image: quay.io/hugoguru/html-proofer:4.0.0.rc1-ci
   script:
     - |
       htmlproofer \
